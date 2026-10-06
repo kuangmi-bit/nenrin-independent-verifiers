@@ -1,0 +1,23 @@
+name: verify
+
+on:
+  push:
+  schedule:
+    - cron: "37 4 * * 1"   # Mondays
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: cryptography (Ed25519 through OpenSSL, as VERIFIER.md section 5 pins)
+        run: python3 -m pip install --quiet cryptography
+      - name: reproduce all three corpora at the pinned commit
+        run: ./fetch_corpus.sh
