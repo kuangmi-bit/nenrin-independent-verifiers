@@ -73,7 +73,7 @@ python3 runners/run_edge.py <corpus_dir>     # holds expected.json and fixtures/
 
 Each runner prints `<n>/<total> verdict signatures reproduced` and exits non-zero on any mismatch.
 
-## Two defects this text found in this code
+## Three defects this text found in this code
 
 Re-reading section 5 of the specification after the first passing run caught two real bugs here, both
 now fixed and both with fixtures upstream:
@@ -82,6 +82,22 @@ now fixed and both with fixtures upstream:
   rule the text states (`ts_trailing_newline`);
 - `prev_evidence_id` was treated as absent when the key itself was absent, instead of only when it
   is `null` (`prev_absent_seq0`).
+
+A third came from the conformance-v0 differential on 2026-10-09 (freshly signed bundles, not the frozen
+corpora):
+
+- an action compared equal to itself when both sides were degenerate: `null == null` and `0 == 0` were
+  read as agreement, so two bundles that the reference refuses were accepted here. Section 5 says a
+  missing, `null`, `false`, `0` or `""` action fails E1 (`action_diverged`) on its own — agreement is not
+  the rule, a present action is. The same fix applies to the intent's `proposed_action` (preflight) and
+  to the declared-versus-executed comparison;
+- `findings` was collected into a set, so a bundle that earns `self_authorized` twice (once on the grant,
+  once on the intent) reported it once; the verdict signature carries one entry per occurrence.
+
+After both fixes: 45/45 verdict signatures agree with the reference on the extended differential set (the
+40 bundles the adversary generates plus five degenerate-action cases, including the boundary where
+`action: {}` is an empty object and is therefore *not* degenerate), and the three frozen corpora still
+reproduce at 5/5, 13/13 and 36/36.
 
 That is the point of writing a second reader: the text is the oracle, not the first implementation.
 

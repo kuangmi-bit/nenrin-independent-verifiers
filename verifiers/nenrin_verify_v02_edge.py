@@ -16,6 +16,7 @@ Independence notes (this matters for the evidence value of the result):
 import base64
 import hashlib
 import json
+import math
 import re
 import sys
 from datetime import date
@@ -112,6 +113,23 @@ def canonical(value):
         return "{" + ",".join(
             _canon_string(k) + ":" + canonical(value[k]) for k in keys) + "}"
     raise CanonicalRefusal("unrepresentable_value")
+
+
+def truthy(value):
+    """JS truthiness, which is what section 5's "missing, null, false, 0 or ''" list pins.
+
+    An empty object or array is truthy there, and so it is here; only null, false, 0, NaN
+    and the empty string are not. Used by the action rule (E1) and nowhere else.
+    """
+    if value is None or value is False:
+        return False
+    if isinstance(value, bool):
+        return True
+    if isinstance(value, (int, float)):
+        return value != 0 and not (isinstance(value, float) and math.isnan(value))
+    if isinstance(value, str):
+        return len(value) > 0
+    return True
 
 
 def cbytes(value):
@@ -333,7 +351,7 @@ def recomputes_id(record, derived, id_field):
 class Report:
     def __init__(self):
         self.refusals = set()
-        self.findings = set()
+        self.findings = []  # a list: section 5 keeps one finding per occurrence, not per code
         self.reasons = []
         self.reconciled = None
         self.primary = None
@@ -346,7 +364,7 @@ class Report:
         self.reasons.append(f"{code}:{reason}" if reason else code)
 
     def find(self, code):
-        self.findings.add(code)
+        self.findings.append(code)
 
     def signature(self):
         return {
@@ -563,9 +581,12 @@ def verify(bundle):
                 elif g.get("provider_id") == g.get("caller_id"):
                     rep.find("self_authorized")
             try:
-                if cbytes(g.get("action") if "action" in g else None) \
-                        != cbytes(r.get("executed_action")
-                                  if "executed_action" in r else None):
+                # Section 5, "Missing fields inside a record": if either action is missing,
+                # null, false, 0 or "", E1 fails -- the two sides agreeing on a degenerate
+                # value is not agreement. (2026-10-09: the accept-on-null==null reading was wrong.)
+                ga = g.get("action") if "action" in g else None
+                ra = r.get("executed_action") if "executed_action" in r else None
+                if not truthy(ga) or not truthy(ra) or cbytes(ga) != cbytes(ra):
                     return False  # action_diverged
             except CanonicalRefusal:
                 return False
@@ -662,9 +683,10 @@ def verify(bundle):
                     rep.find("self_authorized")
             if not failed:
                 try:
-                    if cbytes(grant.get("action") if "action" in grant else None) \
-                            != cbytes(intent.get("proposed_action")
-                                      if "proposed_action" in intent else None):
+                    # Section 5: a degenerate action fails the check on its own (see E1 above).
+                    ga = grant.get("action") if "action" in grant else None
+                    pa = intent.get("proposed_action") if "proposed_action" in intent else None
+                    if not truthy(ga) or not truthy(pa) or cbytes(ga) != cbytes(pa):
                         failed = True  # action_diverged
                 except CanonicalRefusal:
                     failed = True
@@ -676,11 +698,10 @@ def verify(bundle):
                 rep.refuse("preflight_signature_invalid", "intent_sig")
             if rep.reconciled is not None:
                 try:
-                    if cbytes(intent.get("proposed_action")
-                              if "proposed_action" in intent else None) \
-                            != cbytes(rep.reconciled.get("executed_action")
-                                      if "executed_action" in rep.reconciled
-                                      else None):
+                    pa = intent.get("proposed_action") if "proposed_action" in intent else None
+                    ra = (rep.reconciled.get("executed_action")
+                          if "executed_action" in rep.reconciled else None)
+                    if not truthy(pa) or not truthy(ra) or cbytes(pa) != cbytes(ra):
                         rep.find("declared_executed_divergence")
                 except CanonicalRefusal:
                     rep.find("declared_executed_divergence")
