@@ -1,0 +1,37 @@
+r2: e061462 layers read, cases=20
+r1: 407ca2d5 layers read, cases=20
+
+== mutations (baseline layers -> mutated layers) ==
+  [OK] valid-did-key-minimal: display_name changed, passport_id left stale
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "ok", "passport_id": "mismatch", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  [OK] valid-did-key-minimal: signature produced by the other key
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "ok", "passport_id": "ok", "signature": "invalid", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  [OK] valid-did-key-minimal: extra principal_id member
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "rejected", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  [OK] valid-did-key-minimal: capabilities reversed
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "rejected", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  [OK] valid-did-key-minimal: timestamp without milliseconds
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "rejected", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  [OK] valid-did-web-resolved: resolver answers a different key for the same method
+        baseline {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "verified"}
+        mutated  {"structure": "ok", "passport_id": "ok", "signature": "ok", "validity_window": "ok", "proof_of_possession": true, "key_authority": "rejected"}
+  mutations moved the reader as expected: 6/6
+
+== r1 vs r2, same reader, layers only (read from the two blobs) ==
+  layers differing between revisions: 0/20
+
+== published layers, r1 vs r2 (the fixture's own column) ==
+  version-changed: r1 {"structure": "rejected", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+                   r2 {"structure": "unsupported", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  record-type-changed: r1 {"structure": "rejected", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+                       r2 {"structure": "unsupported", "passport_id": "not_checked", "signature": "not_checked", "validity_window": "not_checked", "proof_of_possession": false, "key_authority": "not_checked"}
+  published layers differing between revisions: 2/20
+
+== does my reader agree with each revision's own published layers? ==
+  r1: 18/20
+  r2: 20/20

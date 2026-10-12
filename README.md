@@ -8,6 +8,9 @@ check them against the interop corpora published by
 reference implementation (`sdk/nenrin_verify.mjs`) or the JavaScript runner. Both implementations
 reproduce every corpus verdict signature:
 
+A third reader, for the `aps.agent-passport` 2.0 vectors of Agent Passport System, was added on
+2026-10-12 and is described in its own section below.
+
 | corpus | fixtures | reproduced | rules in force |
 |---|---|---|---|
 | `interop-v0` | 5 | **5/5** | `VERIFIER.md` @ `65ae7d0f` |
@@ -47,8 +50,12 @@ the text.
 ```
 verifiers/nenrin_verify_v0.py         rules as of VERIFIER.md 65ae7d0f (interop-v0, interop-v0.1)
 verifiers/nenrin_verify_v02_edge.py   the same reader plus the section 5 key rule (interop-v0.2/edge)
+verifiers/aps_v2_verify.py            reader for the aps.agent-passport 2.0 vectors
 runners/run_corpus.py                 runs a verifier over a corpus dir and diffs expected.json
 runners/run_edge.py                   runs the v0.2 reader over the edge corpus
+runners/run_aps_v2.py                 fetches a pinned APS revision, anchor-checks it, reads all cases
+runners/run_aps_v2_mutations.py       non-vacuity mutations + the r1 cross-check
+results/aps-v2-r2.json                per-case output for r2 (with the file's own column alongside)
 fetch_corpus.sh                       fetches the pinned corpora and reproduces all three
 ```
 
@@ -100,6 +107,48 @@ After both fixes: 45/45 verdict signatures agree with the reference on the exten
 reproduce at 5/5, 13/13 and 36/36.
 
 That is the point of writing a second reader: the text is the oracle, not the first implementation.
+
+## The `aps.agent-passport` 2.0 vectors (Agent Passport System)
+
+A third reader, for a separate fixture family: the frozen passport vectors published by
+[agent-passport-system](https://github.com/agent-passport-system/agent-passport-system). Every rule
+is implemented from that family's own published legend — `layers_legend`, `domain_tags`,
+`key_resolver` — and from the vector bytes. The Agent Passport System SDK is neither imported nor run
+here, and no string of it is reproduced: the layer vocabulary and the outcome vocabulary are the
+fixture's own. The canonicalizer is this repository's `musubi-canonical-v0`, proved against the
+vectors' published preimages before any outcome is read (the runner exits 1 if that check misses).
+
+| revision | file sha256 | this reader vs the fixture's published layers |
+|---|---|---|
+| r2 `e061462` | `9bd1f184…3b89` | **20/20** |
+| r1 `407ca2d5` (superseded) | `9fce76db…5ac5` | 18/20 |
+
+Both revisions are read from their published bytes at the pinned commit; neither is edited here.
+
+The two r1 disagreements are `version-changed` and `record-type-changed`, whose published
+`layers.structure` reads `rejected` in r1 and `unsupported` in r2. The passports, preimages, keys and
+resolver table are byte-identical between the revisions, so this reader's own layers are identical
+across them (0/20 differences): the r1→r2 move changes nothing a reader computes from the passports,
+and in r2 the published column agrees with an outside reading on all twenty.
+
+Disclosure, because it bounds what this shows: the fixture publishes the SDK's per-case output and its
+own layers, so the expected outcomes were known to me before the reader was written. This is a
+reproduction by an implementation written independently of the SDK — the oracle being the published
+legend and the bytes — not a blind prediction.
+
+Non-vacuity: six single-change mutations of a passing case — a stale `passport_id`, a signature from
+the other key, an extra `principal_id` member, a reversed capabilities array, a timestamp without
+milliseconds, and a resolver answering a different key — each move the reader on the layer the
+mutation targets, 6/6 (`runners/run_aps_v2_mutations.py`; output in `results/aps-v2-mutations.txt`).
+
+```bash
+python3 runners/run_aps_v2.py                 # fetch at the pin, verify sha256, read, write results/
+python3 runners/run_aps_v2_mutations.py       # non-vacuity + the r1 cross-check
+```
+
+What this does not establish: which reading is correct on the outcomes draft-04 leaves open — the
+fixture records that the SDK and at least one outside reader differ on three of them. It adds one more
+independently written implementation's per-case output for the same pinned bytes.
 
 ## License
 

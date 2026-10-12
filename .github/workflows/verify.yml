@@ -21,3 +21,21 @@ jobs:
         run: python3 -m pip install --quiet cryptography
       - name: reproduce all three corpora at the pinned commit
         run: ./fetch_corpus.sh
+
+  aps-v2:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: cryptography
+        run: python3 -m pip install --quiet cryptography
+      - name: read the aps.agent-passport 2.0 vectors at the pinned revision
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 runners/run_aps_v2.py
+      - name: non-vacuity mutations and the r1 cross-check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 runners/run_aps_v2_mutations.py

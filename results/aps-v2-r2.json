@@ -1,0 +1,583 @@
+{
+ "reader": {
+  "file": "verifiers/aps_v2_verify.py",
+  "sha256": "7ddfccea1ac96bcd38664623445597d0e28cc7ef4880c0e531eb8962180dbea4",
+  "canonicalizer": "verifiers/nenrin_verify_v0.py canonical() (musubi-canonical-v0)",
+  "sdk_imported": false
+ },
+ "source": {
+  "repository": "agent-passport-system/agent-passport-system",
+  "commit_fetched": "e061462",
+  "path": "fixtures/agent-passport-v2/agent-passport-vectors-v2-r2.json",
+  "sha256": "9bd1f1849910c85f0555baf8efaa529aa9d057dce13c24606285b8643a003b89",
+  "expected_sha256": "9bd1f1849910c85f0555baf8efaa529aa9d057dce13c24606285b8643a003b89",
+  "anchor_match": true,
+  "fixture_metadata": {
+   "family": "agent-passport",
+   "version": "v2",
+   "family_revision": 2,
+   "generated_at": "2026-10-11",
+   "supersedes_sha256": "9fce76dbf13de9749a2ef52c8dedecce08e4874da0203b39a7d941eb479b5ac5",
+   "sdk_reference_commit": "6a11df9ee51e63efcad1c2c30e236090cef14db7"
+  }
+ },
+ "key_derivation": [
+  {
+   "label": "agent-key",
+   "seed_from_label_matches": true,
+   "public_from_seed_matches": true,
+   "multibase_decodes_to_seed_key": true,
+   "did_key_commits_to_multibase": true
+  },
+  {
+   "label": "other-key",
+   "seed_from_label_matches": true,
+   "public_from_seed_matches": true,
+   "multibase_decodes_to_seed_key": true,
+   "did_key_commits_to_multibase": true
+  },
+  {
+   "label": "web-agent-key",
+   "seed_from_label_matches": true,
+   "public_from_seed_matches": true,
+   "multibase_decodes_to_seed_key": true,
+   "did_key_commits_to_multibase": true
+  }
+ ],
+ "preimages": [
+  {
+   "case": "valid-did-key-minimal",
+   "passport_id_preimage_published": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223030313132323333343435353636373738383939616162626363646465656666222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_ours": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223030313132323333343435353636373738383939616162626363646465656666222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_match": true,
+   "signature_preimage_published": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223030313132323333343435353636373738383939616162626363646465656666222c2270617373706f72745f6964223a2234346337316431343136643530663036643833313435306263613433316435386331613061343934393864393033323330396663636530356133393235343262222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_ours": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223030313132323333343435353636373738383939616162626363646465656666222c2270617373706f72745f6964223a2234346337316431343136643530663036643833313435306263613433316435386331613061343934393864393033323330396663636530356133393235343262222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_match": true
+  },
+  {
+   "case": "valid-did-key-with-self-asserted",
+   "passport_id_preimage_published": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a226666656564646363626261613939383837373636353534343333323231313030222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b22636f6d6d657263653a636865636b6f7574222c22646174613a72656164225d2c22646973706c61795f6e616d65223a22566563746f72204167656e74227d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_ours": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a226666656564646363626261613939383837373636353534343333323231313030222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b22636f6d6d657263653a636865636b6f7574222c22646174613a72656164225d2c22646973706c61795f6e616d65223a22566563746f72204167656e74227d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_match": true,
+   "signature_preimage_published": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a226666656564646363626261613939383837373636353534343333323231313030222c2270617373706f72745f6964223a2266356538343632643261613866616338343831373838636332356563613764386665636136323034316331663063356363343832396534666130626333313035222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b22636f6d6d657263653a636865636b6f7574222c22646174613a72656164225d2c22646973706c61795f6e616d65223a22566563746f72204167656e74227d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_ours": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a226666656564646363626261613939383837373636353534343333323231313030222c2270617373706f72745f6964223a2266356538343632643261613866616338343831373838636332356563613764386665636136323034316331663063356363343832396534666130626333313035222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b22636f6d6d657263653a636865636b6f7574222c22646174613a72656164225d2c22646973706c61795f6e616d65223a22566563746f72204167656e74227d2c22766572696669636174696f6e5f6d6574686f64223a226469643a6b65793a7a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359237a364d6b72746f316d7636393776707376793966547a6e3948394c4c6656685850624e366d736e634e485576626b3359222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_match": true
+  },
+  {
+   "case": "valid-did-web-resolved",
+   "passport_id_preimage_published": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a7765623a6167656e74732e6578616d706c65222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223031323334353637383961626364656630313233343536373839616263646566222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b73397a726b5a70384872417170647678754c6f7232374d75375a76795a5842337a4379587861676876746861222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a7765623a6167656e74732e6578616d706c65236b65792d31222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_ours": "4150532d50415353504f52542d49442d5632007b226167656e745f6964223a226469643a7765623a6167656e74732e6578616d706c65222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223031323334353637383961626364656630313233343536373839616263646566222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b73397a726b5a70384872417170647678754c6f7232374d75375a76795a5842337a4379587861676876746861222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a7765623a6167656e74732e6578616d706c65236b65792d31222c2276657273696f6e223a22322e30227d",
+   "passport_id_preimage_match": true,
+   "signature_preimage_published": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a7765623a6167656e74732e6578616d706c65222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223031323334353637383961626364656630313233343536373839616263646566222c2270617373706f72745f6964223a2231373262353831343764643462636337383362386533376639333230373266356163366132376239313232343439303031623837626335653565666663623838222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b73397a726b5a70384872417170647678754c6f7232374d75375a76795a5842337a4379587861676876746861222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a7765623a6167656e74732e6578616d706c65236b65792d31222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_ours": "4150532d50415353504f52542d5349472d5632007b226167656e745f6964223a226469643a7765623a6167656e74732e6578616d706c65222c22657870697265735f6174223a22323032372d31302d30315430303a30303a30302e3030305a222c226973737565645f6174223a22323032362d31302d30315430303a30303a30302e3030305a222c226e6f6e6365223a223031323334353637383961626364656630313233343536373839616263646566222c2270617373706f72745f6964223a2231373262353831343764643462636337383362386533376639333230373266356163366132376239313232343439303031623837626335653565666663623838222c227075626c69635f6b65795f6d756c746962617365223a227a364d6b73397a726b5a70384872417170647678754c6f7232374d75375a76795a5842337a4379587861676876746861222c227265636f72645f74797065223a226170732e6167656e742d70617373706f7274222c2273656c665f6173736572746564223a7b226361706162696c6974696573223a5b5d7d2c22766572696669636174696f6e5f6d6574686f64223a226469643a7765623a6167656e74732e6578616d706c65236b65792d31222c2276657273696f6e223a22322e30227d",
+   "signature_preimage_match": true
+  }
+ ],
+ "summary": {
+  "cases": 20,
+  "layers_agree": 20,
+  "state_agrees": 20
+ },
+ "cases": [
+  {
+   "name": "valid-did-key-minimal",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "layers_agree": true,
+   "ours_state": "valid",
+   "fixture_state": "valid",
+   "fixture_code": "OK",
+   "state_agrees": true
+  },
+  {
+   "name": "valid-did-key-with-self-asserted",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "layers_agree": true,
+   "ours_state": "valid",
+   "fixture_state": "valid",
+   "fixture_code": "OK",
+   "state_agrees": true
+  },
+  {
+   "name": "valid-did-web-resolved",
+   "resolver": "table",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "layers_agree": true,
+   "ours_state": "valid",
+   "fixture_state": "valid",
+   "fixture_code": "OK",
+   "state_agrees": true
+  },
+  {
+   "name": "valid-at-issued-at",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "verified"
+   },
+   "layers_agree": true,
+   "ours_state": "valid",
+   "fixture_state": "valid",
+   "fixture_code": "OK",
+   "state_agrees": true
+  },
+  {
+   "name": "tampered-display-name-stale-id",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "mismatch",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "mismatch",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_ID_MISMATCH",
+   "state_agrees": true
+  },
+  {
+   "name": "tampered-display-name-id-repaired",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "invalid",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "invalid",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_SIGNATURE_INVALID",
+   "state_agrees": true
+  },
+  {
+   "name": "passport-id-wrong-signature-valid",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "mismatch",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "mismatch",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_ID_MISMATCH",
+   "state_agrees": true
+  },
+  {
+   "name": "signed-by-other-key",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "invalid",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "invalid",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_SIGNATURE_INVALID",
+   "state_agrees": true
+  },
+  {
+   "name": "public-key-not-the-did-key",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "rejected"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "rejected"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_KEY_AUTHORITY_REJECTED",
+   "state_agrees": true
+  },
+  {
+   "name": "expired",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "not_current",
+    "proof_of_possession": true,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "not_current",
+    "proof_of_possession": true,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_NOT_CURRENT",
+   "state_agrees": true
+  },
+  {
+   "name": "not-yet-valid",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "not_current",
+    "proof_of_possession": true,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "not_current",
+    "proof_of_possession": true,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_NOT_CURRENT",
+   "state_agrees": true
+  },
+  {
+   "name": "did-web-no-resolver",
+   "resolver": "none",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "layers_agree": true,
+   "ours_state": "indeterminate",
+   "fixture_state": "indeterminate",
+   "fixture_code": "PASSPORT_KEY_AUTHORITY_UNRESOLVED",
+   "state_agrees": true
+  },
+  {
+   "name": "did-web-resolver-answers-other-key",
+   "resolver": "table",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "rejected"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "rejected"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_KEY_AUTHORITY_REJECTED",
+   "state_agrees": true
+  },
+  {
+   "name": "did-web-resolver-not-found",
+   "resolver": "table",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "layers_agree": true,
+   "ours_state": "indeterminate",
+   "fixture_state": "indeterminate",
+   "fixture_code": "PASSPORT_KEY_NOT_FOUND",
+   "state_agrees": true
+  },
+  {
+   "name": "did-web-resolver-unreachable",
+   "resolver": "table",
+   "ours": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "fixture_layers": {
+    "structure": "ok",
+    "passport_id": "ok",
+    "signature": "ok",
+    "validity_window": "ok",
+    "proof_of_possession": true,
+    "key_authority": "unresolved"
+   },
+   "layers_agree": true,
+   "ours_state": "indeterminate",
+   "fixture_state": "indeterminate",
+   "fixture_code": "PASSPORT_KEY_UNREACHABLE",
+   "state_agrees": true
+  },
+  {
+   "name": "version-changed",
+   "resolver": "none",
+   "ours": {
+    "structure": "unsupported",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "unsupported",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "unsupported",
+   "fixture_state": "unsupported",
+   "fixture_code": "PASSPORT_UNSUPPORTED_VERSION",
+   "state_agrees": true
+  },
+  {
+   "name": "record-type-changed",
+   "resolver": "none",
+   "ours": {
+    "structure": "unsupported",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "unsupported",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "unsupported",
+   "fixture_state": "unsupported",
+   "fixture_code": "PASSPORT_UNSUPPORTED_RECORD_TYPE",
+   "state_agrees": true
+  },
+  {
+   "name": "capabilities-unsorted",
+   "resolver": "none",
+   "ours": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_MALFORMED",
+   "state_agrees": true
+  },
+  {
+   "name": "principal-member-present",
+   "resolver": "none",
+   "ours": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_MALFORMED",
+   "state_agrees": true
+  },
+  {
+   "name": "timestamp-without-milliseconds",
+   "resolver": "none",
+   "ours": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "fixture_layers": {
+    "structure": "rejected",
+    "passport_id": "not_checked",
+    "signature": "not_checked",
+    "validity_window": "not_checked",
+    "proof_of_possession": false,
+    "key_authority": "not_checked"
+   },
+   "layers_agree": true,
+   "ours_state": "invalid",
+   "fixture_state": "invalid",
+   "fixture_code": "PASSPORT_MALFORMED",
+   "state_agrees": true
+  }
+ ]
+}
