@@ -1,0 +1,127 @@
+{
+  "cases": [
+    {
+      "native_signature": {
+        "findings": [
+          "evidence_bound_unchecked",
+          "no_delegation_observations"
+        ],
+        "refusals": [],
+        "verdict": "accepted",
+        "verifier": "kuangmi-bit-independent"
+      },
+      "nenrin_case": "match",
+      "relationships": {
+        "CW-01": "matched",
+        "CW-02": "matched",
+        "CW-03": "matched",
+        "CW-04": "matched",
+        "CW-05": "matched",
+        "CW-06": "matched",
+        "CW-07": "matched",
+        "CW-08": "matched",
+        "CW-09": "matched",
+        "CW-10": "matched",
+        "CW-11": "matched"
+      },
+      "vate": {
+        "assessment": "supported_under_local_assumptions",
+        "record_linkage": "matched",
+        "retry_authorized": false
+      },
+      "vate_case": "matching"
+    },
+    {
+      "native_signature": {
+        "findings": [
+          "evidence_bound_unchecked",
+          "no_delegation_observations"
+        ],
+        "refusals": [
+          [
+            "execution_invalid",
+            "pair check failed"
+          ]
+        ],
+        "verdict": "refused",
+        "verifier": "kuangmi-bit-independent"
+      },
+      "nenrin_case": "target_mismatch",
+      "relationships": {
+        "CW-01": "matched",
+        "CW-02": "matched",
+        "CW-03": "mismatched",
+        "CW-04": "matched",
+        "CW-05": "matched",
+        "CW-06": "mismatched",
+        "CW-07": "matched",
+        "CW-08": "matched",
+        "CW-09": "matched",
+        "CW-10": "matched",
+        "CW-11": "matched"
+      },
+      "vate": {
+        "assessment": "contradictory",
+        "record_linkage": "matched",
+        "retry_authorized": false
+      },
+      "vate_case": "target-mismatch"
+    },
+    {
+      "native_signature": {
+        "findings": [
+          "no_delegation_observations"
+        ],
+        "refusals": [
+          [
+            "execution_incomplete_pair",
+            "grant xor receipt set"
+          ]
+        ],
+        "verdict": "refused",
+        "verifier": "kuangmi-bit-independent"
+      },
+      "nenrin_case": "missing_receipt",
+      "relationships": {
+        "CW-01": "not_assessed",
+        "CW-02": "not_assessed",
+        "CW-03": "not_assessed",
+        "CW-04": "not_assessed",
+        "CW-05": "not_assessed",
+        "CW-06": "not_assessed",
+        "CW-07": "not_assessed",
+        "CW-08": "not_assessed",
+        "CW-09": "not_assessed",
+        "CW-10": "not_assessed",
+        "CW-11": "matched"
+      },
+      "vate": {
+        "assessment": "insufficient",
+        "record_linkage": "not_assessed",
+        "retry_authorized": false
+      },
+      "vate_case": "missing-post"
+    }
+  ],
+  "evidence_modes": {
+    "nenrin": "fresh_local_run",
+    "vate": "saved"
+  },
+  "full_report": {
+    "bytes": 284541,
+    "file": "live-report.json (gitignored; regenerate with run_swap.py)",
+    "sha256": "b473974de293ef5100c451b32afa3ed3a764c9b94b3afe7da12082c5e141264b"
+  },
+  "pins": {
+    "nenrin_commit": "bfde94be9d8089b7c683bc31b9c39c3879b07ab2",
+    "vate_commit": "b3b6d4f9610e159e92d3b41b66e72fc7251758dc"
+  },
+  "schema": "nenrin-vate-public-crosswalk-v1",
+  "source": {
+    "crosswalk": "https://github.com/Poke-nushi/Verifiable-Agent-Trust-Envelope",
+    "crosswalk_pin": "79a9f91a468be6ef238697baafb5dfe3927a365b",
+    "expectations": "horizon-shield tools/tsunagi/expected/vate-nenrin-s3-crosswalk-v0.json",
+    "verifier": "verifiers/nenrin_verify_v0.py (this repository, written from VERIFIER.md)"
+  },
+  "what": "NENRIN half of Poke-nushi's NENRIN-VATE S3 crosswalk read by the independent verifier in this repository; the eleven relationships computed by the crosswalk's own pinned comparison code"
+}
