@@ -23,6 +23,9 @@ $ python3 settle_core_v0.py --check <vectors_root>
 - `verdict`, `status`, `deviation_codes`, `underspecified_reasons`, `event_set` and `dispositions`
   matched exactly on every vector, including the two real-engagement vectors and the 25 `synth_parent_full_*`
   narrowing vectors.
+- §15 step 2 was run as well: the published reference (`settle_v1_16.py`) also agrees with the expected
+  values on this machine, 128/128 (`results/reference-2026-10-19.txt`), so the comparison is against a
+  reference that demonstrably still produces these vectors here.
 
 ## Shape
 
