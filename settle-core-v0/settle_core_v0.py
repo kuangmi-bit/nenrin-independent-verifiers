@@ -888,6 +888,7 @@ def record_flags(record, contract, grant, csha):
     sigs = record.get("signatures")
     strictly = False
     lax_seen = False
+    contractor_verified = False
     body_value_strict = strict({k: v for k, v in record.items() if k not in ("signatures", "anchor")})
     if isinstance(sigs, list) and sigs:
         msg = signing_bytes(record)
@@ -914,6 +915,8 @@ def record_flags(record, contract, grant, csha):
             sig = entry.get("sig_b64")
             res = verify(key, sig, msg)
             if res is True:
+                if role == "contractor" and schema == "a2a-execution-v0":
+                    contractor_verified = True
                 if sig_strict(sig) and strict(entry):
                     strictly = True
                 else:
@@ -957,7 +960,7 @@ def record_flags(record, contract, grant, csha):
                         x = op["hex"]
                         if not (isinstance(x, str) and re.match(r"^(?:[0-9a-f]{2})*$", x)):
                             anchor_ok = False
-    return strictly, body_ok, anchor_ok, lax_seen
+    return strictly, body_ok, anchor_ok, lax_seen, contractor_verified
 
 
 def anchors_validly(record, view_heights, view_hashes=None):
@@ -1067,11 +1070,18 @@ def walk(event_set, records_by_sha, contract, csha, deviations, reasons):
         if rec["schema"] != "a2a-execution-v0":
             continue
         h = rec["_height"]
+        revoked_here = False
         if rev_policy:
             if any(E <= h for _, E in rev_sorted):
+                revoked_here = True
                 for a in rec.get("performed_actions") or []:
                     deviations.add("revoked")
-                continue
+        if revoked_here:
+            # 10.4: approvals carried by a revoked execution are still classified
+            for ap in rec.get("approvals") or []:
+                if classify_approval(ap, pk, csha, contract) == "forged":
+                    deviations.add("forged_approval")
+            continue
         expiry = grant.get("expiry_height")
         if expiry is not None and is_int(expiry) and h > expiry:
             for a in rec.get("performed_actions") or []:
@@ -1196,7 +1206,8 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
         else:
             parent_ok = isinstance(parent, dict) and door(parent)
             cid_ok = isinstance(pc, dict) and isinstance(parent, dict) and pc.get("contract_id") == parent.get("contract_id")
-            subset_ok = parent_ok and cid_ok and grant_subset(contract.get("grant"), parent.get("grant"))
+            subset_ok = (door_ok and parent_ok and cid_ok
+                         and grant_subset(contract.get("grant"), parent.get("grant")))
             if not subset_ok:
                 reasons.add("parent_narrowing_failed")
 
@@ -1264,9 +1275,10 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
     classified = []  # (record, sha, state)
     for rec in bound:
         rsha = record_sha256(rec)
-        strictly, body_ok, anchor_ok, lax = record_flags(rec, contract, grant, csha)
+        strictly, body_ok, anchor_ok, lax, contractor_ok = record_flags(rec, contract, grant, csha)
         classified.append({"rec": rec, "sha": rsha, "strictly": strictly, "body_ok": body_ok,
-                           "anchor_ok": anchor_ok, "lax": lax, "state": None})
+                           "anchor_ok": anchor_ok, "lax": lax, "contractor_ok": contractor_ok,
+                           "state": None})
     # first pass: everything except the anchor_not_strict cross-record row
     for c in classified:
         if not c["strictly"]:
@@ -1281,6 +1293,9 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
             # a party's own statement that cannot be read strictly: fail closed, do not settle it
             c["state"] = "record_not_strict"
             reasons.add("record_not_strict")
+            continue
+        if c["rec"].get("schema") == "a2a-revocation-v0" and c["rec"].get("revoked_by") != "principal":
+            c["state"] = "ignored"
             continue
         if not c["anchor_ok"]:
             c["state"] = "anchor_pending"
@@ -1308,7 +1323,7 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
         reasons.add("input_too_large")
         return finish(contract, csha, reasons, deviations, dispositions, [], view)
     for c in classified:
-        if c["state"] in ("record_not_strict", "signature_not_strict", "rejected",
+        if c["state"] in ("record_not_strict", "signature_not_strict", "rejected", "ignored",
                           "revocation_not_provided_for", "anchor_not_strict"):
             dispositions[c["sha"]] = c["state"]
 
@@ -1337,7 +1352,7 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
         drop = []
         for c in active:
             if conformance_problem(c["rec"]):
-                if c["rec"].get("schema") == "a2a-execution-v0" and c["strictly"]:
+                if c["rec"].get("schema") == "a2a-execution-v0" and c.get("contractor_ok"):
                     deviations.add("nonconforming_record")
                 else:
                     drop.append(c)
@@ -1399,13 +1414,8 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
     accepted = [r for r in event_records if not r.get("_orphaned")]
     accepted.sort(key=lambda r: (r["_height"], r["_sha"]))
 
-    # 6.5 revoked_by: an ignored revocation is not part of the event set
-    kept_events = []
-    for r in accepted:
-        if r["schema"] == "a2a-revocation-v0" and r.get("revoked_by") != "principal":
-            dispositions[r["_sha"]] = "ignored"
-            continue
-        kept_events.append(r)
+    # 6.5 revoked_by was applied in section 6 (above), so `accepted` holds no ignored record
+    kept_events = list(accepted)
     event_set_out = [{"kind": {"a2a-execution-v0": "execution", "a2a-revocation-v0": "revocation",
                                "a2a-revocation-ack-v0": "revocation_ack"}[r["schema"]],
                       "sha256": r["_sha"], "height": r["_height"]} for r in kept_events]

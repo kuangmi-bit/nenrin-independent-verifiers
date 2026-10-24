@@ -84,3 +84,21 @@ Each was resolved by the vectors, as §15 asks:
 - `settle_core_v0.py` — the implementation and the vector runner.
 - `results/vectors-2026-10-19.txt` — the full per-vector log of the run reported above.
 - `run_check.sh` — clones nothing; points the checker at a local checkout of the vectors.
+
+## Differential-fuzzer follow-ups (2026-10-24)
+
+`ogasurfproject-jpg/horizon-shield#49` ran a differential fuzzer over this implementation,
+the reference and `aeoess/musubi-settle-core-check`. Five of the eight separations it found
+are defects here and are fixed in this commit; the public 128 vectors agreed before and after
+(they do not distinguish the two readings):
+
+| case | what was wrong | fix |
+|---|---|---|
+| B | `parent_narrowing_failed` was skipped when the child itself failed section 4.1; 4.3.1 makes passing "with the parent supplied" conditional on passing 4.1 on its own | the subset test now includes the child's own door |
+| D | the `revoked_by != "principal"` rule of 6.5 ran after section 7, so a revocation with a bad anchor was reported as an anchor failure instead of `ignored` | applied in 6.0 triage, before anchors |
+| E | approvals carried by a revoked execution were never classified; 10.4 says "revoked or not" | classified before the revocation branch returns |
+| F | any strictly signed nonconforming execution was a charge; 6.6 asks for a *contractor* signature that verifies | the contractor signature is tracked separately from "strictly signed" |
+| G | status was computed over records that 6.5 had ignored, so an ignored revocation above the horizon made it `provisional` | ignored records no longer reach the event set |
+
+Case H did not reproduce: `contract_ref.contract_sha256` values that are not 64 lowercase hex are
+classified `inconsistent` here, which is the order in 6.1.
