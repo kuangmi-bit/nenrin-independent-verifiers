@@ -102,3 +102,5 @@ are defects here and are fixed in this commit; the public 128 vectors agreed bef
 
 Case H did not reproduce: `contract_ref.contract_sha256` values that are not 64 lowercase hex are
 classified `inconsistent` here, which is the order in 6.1.
+
+Regression inputs from the fuzzer run in horizon-shield#49 live in `regressions/` (inputs only, copied verbatim, with the fuzzer's SHA256SUMS); `python3 regressions/check.py` replays the six agreements.

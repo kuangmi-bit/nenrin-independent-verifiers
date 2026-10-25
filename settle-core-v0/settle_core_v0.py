@@ -32,7 +32,7 @@ SCHEMAS = ("a2a-execution-v0", "a2a-revocation-v0", "a2a-revocation-ack-v0")
 CONTEXT = {"a2a-execution-v0": b"a2a-execution-v0\n",
            "a2a-revocation-v0": b"a2a-revocation-v0\n",
            "a2a-revocation-ack-v0": b"a2a-revocation-ack-v0\n"}
-HEX64 = re.compile(r"^[0-9a-f]{64}$")
+HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 HEX32 = re.compile(r"^[0-9a-f]{32}$")
 ACTION = re.compile(r"^[a-z][a-z0-9_.:-]{0,63}$")
 LABEL = re.compile(r"^[a-z0-9]([a-z0-9-]*[a-z0-9])?$")
@@ -806,7 +806,7 @@ def apply_proof(digest, proof):
             cur = cur.hex().encode()
         elif name in ("append", "prepend"):
             x = op.get("hex")
-            if not isinstance(x, str) or not re.match(r"^(?:[0-9a-f]{2})*$", x):
+            if not isinstance(x, str) or not re.match(r"(?:[0-9a-f]{2})*\Z", x):
                 return None
             b = bytes.fromhex(x)
             if len(b) > 4096:
@@ -1294,9 +1294,6 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
             c["state"] = "record_not_strict"
             reasons.add("record_not_strict")
             continue
-        if c["rec"].get("schema") == "a2a-revocation-v0" and c["rec"].get("revoked_by") != "principal":
-            c["state"] = "ignored"
-            continue
         if not c["anchor_ok"]:
             c["state"] = "anchor_pending"
             continue
@@ -1323,7 +1320,7 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
         reasons.add("input_too_large")
         return finish(contract, csha, reasons, deviations, dispositions, [], view)
     for c in classified:
-        if c["state"] in ("record_not_strict", "signature_not_strict", "rejected", "ignored",
+        if c["state"] in ("record_not_strict", "signature_not_strict", "rejected",
                           "revocation_not_provided_for", "anchor_not_strict"):
             dispositions[c["sha"]] = c["state"]
 
@@ -1346,8 +1343,16 @@ def settle(contract, events, view, nenrin_records=None, parent=None):
         else:
             collapsed.extend(grp)
 
+    # 6.5 tail: a kept revocation whose revoked_by is not "principal" is ignored. Applied after
+    # 6.4 so a copy that duplicates another is dropped as a copy first (2.3 and 9.2 order it so).
+    active = []
+    for c in collapsed:
+        if c["rec"].get("schema") == "a2a-revocation-v0" and c["rec"].get("revoked_by") != "principal":
+            dispositions[c["sha"]] = "ignored"
+            continue
+        active.append(c)
+
     # 6.6 conformance (fixpoint)
-    active = collapsed
     while True:
         drop = []
         for c in active:
